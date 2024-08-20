@@ -5,21 +5,53 @@
     box-sizing: border-box;
 }
 
+/* Contenedor para el fondo */
 body {
-    background: #eaeaea url(./Assets/Img/img1.png) no-repeat center center fixed;
-    background-size: cover;
+    margin: 0;
     overflow: hidden;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
     font-family: Arial, sans-serif;
     color: #333;
     text-align: center;
     padding: 20px;
+    position: relative;
+    background-color: #eaeaea; /* Color de fondo de la página */
 }
 
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('./Assets/Img/img1.png') no-repeat center center fixed;
+    background-size: cover;
+    z-index: -1; /* Poner el fondo detrás de otros contenidos */
+    animation: zoomInOut 30s ease-in-out infinite; /* Animación de zoom suave */
+    transform-origin: center; /* El zoom se centra en el medio */
+}
+
+@keyframes zoomInOut {
+    0% {
+        transform: scale(1); /* Tamaño inicial */
+    }
+    50% {
+        transform: scale(1.1); /* Tamaño ampliado (más cerca) */
+    }
+    100% {
+        transform: scale(1); /* Tamaño final (original) */
+    }
+}
+
+/* Estilos para el resto del contenido */
+.container {
+    position: relative;
+    z-index: 1; /* Asegura que el contenido esté encima del fondo */
+}
 .container {
     position: absolute;
     top: 50%;
@@ -125,29 +157,57 @@ body {
     }
 }
 
+.vaca-icon {
+    width: 60px; /* Ajusta el tamaño de la vaca */
+    height: auto;
+    margin-right: 15px; /* Espacio entre la vaca y el botón */
+    align-self: center; /* Alinea la vaca con los botones */
+    transition: transform 0.3s ease; /* Suaviza las animaciones */
+}
+
 .button {
     width: 100%;
     text-align: center;
     position: absolute;
     bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .button button {
-    width: 40px;
-    height: 35px;
-    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     border: none;
     cursor: pointer;
     margin: 0 5px;
-    border: 1px solid #000;
-    transition: 0.3s;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #555;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
 }
 
 .button button:hover {
-    background: #ababab;
+    background-color: #505050;
     color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
+.button button:active {
+    transform: scale(0.95);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.button button:hover ~ .vaca-icon {
+    transform: scale(1.2); /* Agranda la vaca cuando se pasa el cursor sobre los botones */
+}
 /* Hearts Styles */
 .hearts-container {
     position: fixed;
@@ -201,33 +261,109 @@ body {
 }
 /* Add to style.css */
 /* Existing styles */
-
+/* Welcome Animation */
 .welcome-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: white; /* White background for the welcome screen */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
     opacity: 1;
     transition: opacity 1s ease-in-out;
+    overflow: hidden; /* Hide any overflow content */
 }
 
 .welcome-message {
-    color: #fff;
+    color: black; /* Text color for the message */
     text-align: center;
-    animation: fadeIn 1s ease-in-out;
+    font-size: 3rem; /* Font size for the message */
+    background: linear-gradient(to right, #ffffff, #f0f0f0); /* Gradient background */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners for the message box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    animation: fadeInOut 4s ease-in-out forwards; /* Animation to fade in and out */
 }
 
-@keyframes fadeIn {
+@keyframes fadeInOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}
+
+/* Contenedor para la vaca animada */
+.vaca-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Permite interactuar con otros elementos debajo */
+    overflow: hidden; /* Oculta la vaca fuera del área visible */
+    z-index: 9980; /* Asegura que esté debajo del mensaje de bienvenida */
+}
+
+.vaca {
+    position: absolute;
+    width: 100px; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    transition: transform 0.1s linear; /* Suaviza el movimiento */
+}
+
+/* Estilos del título en el fondo */
+.background-title {
+    position: fixed;
+    top: 20px; /* Ajusta la distancia desde la parte superior */
+    left: 20px; /* Ajusta la distancia desde la parte izquierda */
+    font-size: 80px; /* Ajusta el tamaño del texto */
+    color: rgb(253, 251, 251); /* Color blanco con un poco más de opacidad */
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 9999; /* Asegura que el texto esté encima de todo */
+    pointer-events: none; /* Permite interactuar con los elementos debajo */
+    user-select: none; /* Evita la selección de texto */
+    text-shadow: 2px 2px 4px rgb(255, 255, 255); /* Añade una sombra para mejor visibilidad */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    opacity: 0; /* Inicialmente invisible */
+    transform: translateX(-50px); /* Comienza ligeramente desplazado */
+    animation: fadeInMove 1s ease-out 4s forwards, idle 3s ease-in-out infinite; /* Animaciones combinadas */
+}
+
+@keyframes fadeInMove {
     from {
         opacity: 0;
+        transform: translateX(-50px); /* Comienza fuera de vista */
     }
     to {
         opacity: 1;
+        transform: translateX(0); /* Termina en su posición final */
+    }
+}
+
+@keyframes idle {
+    0% {
+        transform: translateY(0) scale(1);
+        color: rgb(253, 251, 251);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.05);
+        color: rgb(240, 240, 240); /* Color más claro en la mitad de la animación */
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        color: rgb(253, 251, 251);
     }
 }

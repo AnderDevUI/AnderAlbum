@@ -1,0 +1,9 @@
+{
+  "lyrics": [
+    {"time": 0, "text": "Verso 1: Aquí va la letra del primer verso."},
+    {"time": 5, "text": "Verso 2: Aquí va la letra del segundo verso."},
+    {"time": 10, "text": "Verso 3: Aquí va la letra del tercer verso."},
+    {"time": 15, "text": "Verso 4: Aquí va la letra del cuarto verso."},
+    {"time": 20, "text": "Verso 5: Aquí va la letra del quinto verso."}
+  ]
+}
